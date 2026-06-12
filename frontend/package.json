@@ -1,0 +1,39 @@
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@reduxjs/toolkit": "^2.12.0",
+    "axios": "^1.12.2",
+    "bootstrap": "^4.3.1",
+    "isotope-layout": "^3.0.6",
+    "jquery": "^3.7.1",
+    "owl.carousel": "^2.3.4",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-isotope": "^1.0.7",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^7.9.4",
+    "redux-persist": "^6.0.0",
+    "sweetalert2": "^11.26.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "vite": "^7.1.7"
+  }
+}
