@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\ProductDoughType;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ProductVariantSeeder::class,
             ProductToppingSeeder::class,
             ProductDoughTypeSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

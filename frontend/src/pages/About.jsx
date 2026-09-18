@@ -1,15 +1,14 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react"
+import api from '~/axios'
 
 export default function About() {
 
     const [about, setAbout] = useState({})
 
-    const baseUrl = import.meta.env.VITE_API_BASE_URL
     const imageUrl = import.meta.env.VITE_IMAGE_URL
 
     const fetchData = async () => {
-        const response = await axios.get(`${baseUrl}/api/about`);
+        const response = await api.get(`/api/about`);
         setAbout(response.data.data)
     }
     useEffect(() => {

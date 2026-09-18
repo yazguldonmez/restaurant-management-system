@@ -1,7 +1,5 @@
-import { useState, useRef, useEffect, } from "react"
-import axios from "axios"
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, addToCart } from '~/store/cart/cartSlice'
+import { removeItem, clearCart } from '~/store/cart/cartSlice'
 import Swal from "sweetalert2"
 import './cart.css'
 
@@ -9,20 +7,20 @@ export default function Menu() {
 
     const items = useSelector((state) => state.cart.cartItems)
     const dispatch = useDispatch()
-    console.log('cartItems: ', JSON.parse(JSON.stringify(items)))
+    // console.log('cartItems: ', JSON.parse(JSON.stringify(items)))
 
     const imageUrl = import.meta.env.VITE_IMAGE_URL
 
     const total = items.reduce((sum, item) => sum + item.totalPrice, 0);
 
-    const showAlert = () => {
+    const showAlert = (item) => {
         Swal.fire({
-            position: "top-end",
-            icon: 'success',
-            width: '300px',
-            text: 'Your item has been added',
-            showConfirmButton: false,
-            timer: 2000
+            title: "Cart Item Removal",
+            text: "Are you sure you want to remove selected item?",
+            showCancelButton: true,
+            confirmButtonText: "confirm",
+        }).then((result) => {
+            if (result.isConfirmed) dispatch(removeItem( item )) 
         });
     };
 
@@ -36,7 +34,6 @@ export default function Menu() {
                     {items.map((item) => (
                         <ul className="cart-items" key={item.id}>
                             <li className="cart-item">
-                                {console.log('item id: ', item.id)}
                                 <div className="cart-item-info">
                                     <img
                                         src={`${imageUrl}/${item.image}`}
@@ -61,7 +58,10 @@ export default function Menu() {
                                     </span>
                                 </div>
 
-                                <button type="button" className="cart-item-remove">
+                                <button type="button"
+                                    className="cart-item-remove"
+                                    onClick={() => showAlert(item)}
+                                >
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
                                         <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                                     </svg>

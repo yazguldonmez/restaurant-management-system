@@ -5,9 +5,11 @@ import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { MainMenu } from "~/utils/const"
 import { useSelector, useDispatch } from 'react-redux'
-export default function Header() {
+import CartContext from "~/context/CartContext"
 
-    const cartItems = useSelector((state) => state.cart.value)
+export default function Header({ handleUpdate }) {
+
+    const cartItems = useSelector((state) => state.cart.cartItems)
     const dispatch = useDispatch()
 
     const [categories, setCategories] = useState([]);
@@ -101,8 +103,9 @@ export default function Header() {
                                 <a href="" className="user_link">
                                     <i className="fa fa-user" aria-hidden="true"></i>
                                 </a>
+
                                 <NavLink to='/cart' className="cart-link" >
-                                    <div className="svg-bage">
+                                    <div className="svg-bage position-relative">
                                         <svg version="1.1" id="Capa_1"
                                             width="20" height="20"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +164,13 @@ export default function Header() {
                                             <g>
                                             </g>
                                         </svg>
-                                        <span className="cart-badge">{cartItems?.length}</span></div>
+
+                                        <span className="badge rounded-pill badge-danger position-absolute">
+                                            {cartItems.reduce((accumulator, cartItem) => accumulator + cartItem.quantity,
+                                                0,)}
+                                        </span>
+
+                                    </div>
                                 </NavLink>
                                 <form className="form-inline">
                                     <button className="btn  my-2 my-sm-0 nav_search-btn" type="submit">
@@ -173,8 +182,8 @@ export default function Header() {
                                 </a>
                             </div>
                         </div>
-
-                    </div ></nav>
+                    </div >
+                </nav >
             </header >
             {/* </div> */}
         </>

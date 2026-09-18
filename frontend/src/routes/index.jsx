@@ -1,10 +1,13 @@
-import { createBrowserRouter } from "react-router-dom";
-import About from "~/pages/About";
-import MainLayout from "~/layout/MainLayout";
-import Menu from "~/pages/Menu";
-import Home from "~/pages/Home";
-import Cart from "~/pages/Cart/Cart";
-import BookTable from "~/components/Reservation";
+import { createBrowserRouter } from "react-router-dom"
+import About from "~/pages/About"
+import MainLayout from "~/layout/MainLayout"
+import AdminLayout from "~/admin/layout/AdminLayout"
+import Menu from "~/pages/Menu"
+import Home from "~/pages/Home"
+import Cart from "~/pages/Cart/Cart"
+import Reservation from "~/pages/Reservation"
+import Login from "~/pages/Login/Login"
+import Dashboard from "~/admin/pages/Dashboard"
 
 const routes = createBrowserRouter([
     {
@@ -33,8 +36,30 @@ const routes = createBrowserRouter([
             },
             {
                 path: 'book-table',
-                element: <BookTable />
+                element: <Reservation />
             },
+            {
+                path: 'login',
+                element: <Login />
+            },
+        ]
+    },
+    {
+        path: 'dashboard',
+        element: <AdminLayout />,
+        children: [
+            {
+                index: true,
+                element: <Dashboard />
+            },
+            // {
+            //     path: 'products',
+            //     element: <Products />
+            // },
+            // {
+            //     path: 'products/add',
+            //     element: <ProductAdd />
+            // }
         ]
     }
 ])

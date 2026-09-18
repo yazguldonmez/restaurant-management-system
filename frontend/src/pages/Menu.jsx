@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, } from "react"
-import axios from "axios"
-import { NavLink, useParams } from "react-router-dom"
+import api from '~/axios'
+import { NavLink, useParams, useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
-import { decrement, addToCart } from '~/store/cart/cartSlice'
+import { addToCart } from '~/store/cart/cartSlice'
 import Swal from "sweetalert2"
 
 export default function Menu() {
@@ -21,13 +21,14 @@ export default function Menu() {
     const [price, setPrice] = useState()
     // const [isModalOpen, setIsModalOpen] = useState(false)
 
-    const cart = useSelector((state) => state.cart.value)
+    const cart = useSelector((state) => state.cart.cartItems)
     const dispatch = useDispatch()
+    const modalRef = useRef(null)
 
     // const modalRef = useRef(null);
     // let modalInstance = null;
     // const [modal, setModal] = useState(false);
-    const baseUrl = import.meta.env.VITE_API_BASE_URL
+    
     const imageUrl = import.meta.env.VITE_IMAGE_URL
 
 
@@ -43,13 +44,14 @@ export default function Menu() {
     };
 
     const fetchData = async () => {
-        const response = await axios.get(`${baseUrl}/api/menu/${params.category}`)
+        const response = await api.get(`/api/menu/${params.category}`)
         setProducts(response.data.data)
         setCategory(response.data.category)
     }
 
     const productDetail = async () => {
-        const response = await axios.get(`${baseUrl}/api/menu/${params.category}/${params.product}`);
+        const response = await api.get(`/api/menu/${params.category}/${params.product}`);
+
         setProduct(response.data.data)
         // console.log(response.data.data)
         setDoughType(response.data.doughTypes)
@@ -60,9 +62,7 @@ export default function Menu() {
         // const defaultVariant = variants?.find(v => v.is_default === 1);
     }
 
-    const modalState = () => {
-        setIsModalOpen()
-    }
+    const navigate = useNavigate();
 
     const changedSelectSize = (e) => {
         setSelectedSizeId(parseInt(e.target.value))
@@ -88,7 +88,6 @@ export default function Menu() {
     const decrementQuantity = () => {
         const decreaseQuantity = quantity - 1
         setQuantity(decreaseQuantity)
-
     }
 
     const incrementQuantity = () => {
@@ -100,8 +99,15 @@ export default function Menu() {
         fetchData()
         if (params.product) {
             productDetail()
-
+            $('#cartModal').modal('show')
+            $('#cartModal').on('hidden.bs.modal', function (event) {
+                navigate(-1)
+            })
+            return () => {
+                $('#cartModal').off('hidden.bs.modal')
+            }
         }
+
     }, [params])
 
 
@@ -151,8 +157,8 @@ export default function Menu() {
                                             {/* {`/menu/${category.slug}/$ */}
                                             <NavLink to={product.slug} >
                                                 <button className="btn cart"
-                                                    data-toggle="modal"
-                                                    data-target="#cartModal"
+                                                // data-toggle="modal"
+                                                // data-target="#cartModal"
                                                 >
                                                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 456.029 456.029" enableBackground="new 0 0 456.029 456.029" xmlSpace="preserve">
                                                         <g>
@@ -219,11 +225,15 @@ export default function Menu() {
                 {/* Modal Begin */}
                 {/* ref={modalRef} */}
 
-                <div className="modal" id="cartModal" tabIndex="-1">
+                <div className="modal" ref={modalRef} id="cartModal" tabIndex="-1">
                     <div className="modal-dialog">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -257,7 +267,11 @@ export default function Menu() {
                                     )}
                                     <div className="modal-footer">
 
-                                        <button className="btn btn-outline-secondary" type="button" id="minus" onClick={decrementQuantity}>-</button>
+                                        <button className="btn btn-outline-secondary"
+                                            type="button" id="minus"
+                                            onClick={decrementQuantity}
+                                            disabled={quantity <= 1}
+                                        >-</button>
                                         <input className="form-control text-center quantity" type="number" value={quantity} min="1" max="100" readOnly={true} />
                                         <button className="btn btn-outline-secondary" type="button" id="plus" onClick={incrementQuantity}>+</button>
 

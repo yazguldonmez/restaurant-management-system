@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
@@ -30,3 +32,15 @@ Route::get('/about', [AboutController::class, 'index']);
 Route::get('/menu/{category}', [ProductController::class, 'getAllProductsWithToppingsByCategory']);
 Route::get('/menu/{category}/{product}', [ProductController::class, 'getProductDetails']);
 Route::get('/category', [CategoryController::class, 'index']);
+
+//auth
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->middleware(['auth:sanctum']);
+
+//dashboard
+Route::prefix('dashboard')
+    ->middleware(['auth:sanctum'])
+    ->name('dashboard')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index']);
+    });

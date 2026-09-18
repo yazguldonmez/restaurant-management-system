@@ -3,9 +3,8 @@ import Carousel from '~/components/Carousel'
 import Header from '~/components/Header'
 import OfferBox from '~/components/OfferBox'
 import About from '~/pages/About'
-import BookTable from '~/components/Reservation'
 import Menu from '~/pages/Menu'
-import Reservation from '~/components/Reservation'
+import Reservation from '~/pages/Reservation'
 
 export default function Home() {
     return (

@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductDoughType;
 use App\Models\ProductVariant;
 use App\Models\Sizes;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 use function PHPUnit\Framework\isEmpty;
@@ -18,7 +19,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $products = Product::with('category')
             ->where('status', '1')
@@ -26,7 +27,7 @@ class ProductController extends Controller
         return response()->json(['data' => $products], 200);
     }
 
-    public function getAllProductsWithToppingsByCategory(string $slug)
+    public function getAllProductsWithToppingsByCategory(string $slug): JsonResponse
     {
         $category = Category::where('status', '1')
             ->where('slug', $slug)
@@ -46,14 +47,14 @@ class ProductController extends Controller
 
         // dd($products);
 
-        if (!$products) { // || isEmpty($products) hata veriyor!
+        if ($products->isEmpty()) { // || isEmpty($products) hata veriyor!
             return response()->json(['message' => 'Product Not Found'], 404);
         }
 
         return response()->json(['data' => $products, 'category' => $category]);
     }
 
-    public function getProductDetails(string $categorySlug, string $productSlug)
+    public function getProductDetails(string $categorySlug, string $productSlug): JsonResponse
     {
 
         $category = Category::where('status', '1')
@@ -104,7 +105,7 @@ class ProductController extends Controller
     }
 
 
-    public function showProductWithCategoriesAndToppings(int $productId)
+    public function showProductWithCategoriesAndToppings(int $productId): JsonResponse
     {
         $product = $productId;
         $getProduct = Product::where('status', '1')->get();

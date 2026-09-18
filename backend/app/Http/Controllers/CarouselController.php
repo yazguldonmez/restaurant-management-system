@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Carousel as Slider;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CarouselController extends Controller
@@ -11,7 +12,7 @@ class CarouselController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : JsonResponse
     {
         $sliders = Slider::where('status', '1')->get();
         return response()->json(['data' => $sliders], 200);
