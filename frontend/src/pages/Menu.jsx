@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, } from "react"
 import api from '~/axios'
-import { NavLink, useParams, useNavigate } from "react-router-dom"
+import { NavLink, useParams, useNavigate, useLocation } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { addToCart } from '~/store/cart/cartSlice'
 import Swal from "sweetalert2"
@@ -24,11 +24,12 @@ export default function Menu() {
     const cart = useSelector((state) => state.cart.cartItems)
     const dispatch = useDispatch()
     const modalRef = useRef(null)
+    const location = useLocation()
 
     // const modalRef = useRef(null);
     // let modalInstance = null;
     // const [modal, setModal] = useState(false);
-    
+
     const imageUrl = import.meta.env.VITE_IMAGE_URL
 
 
@@ -42,11 +43,12 @@ export default function Menu() {
             timer: 2000
         });
     };
-
     const fetchData = async () => {
-        const response = await api.get(`/api/menu/${params.category}`)
-        setProducts(response.data.data)
-        setCategory(response.data.category)
+        if (location.pathname.startsWith('/menu')) {
+            const response = await api.get(`/api/menu/${params.category}`)
+            setProducts(response.data.data)
+            setCategory(response.data.category)
+        }
     }
 
     const productDetail = async () => {

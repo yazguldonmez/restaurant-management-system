@@ -2,6 +2,8 @@ import { useState } from "react";
 import api from '~/axios'
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { setAuthenticated } from "~/store/auth/authSlice";
 
 export default function Login() {
 
@@ -9,6 +11,8 @@ export default function Login() {
 
     const [formData, setFormData] = useState({ email: '', password: '' })
     const [errors, setErrors] = useState({})
+
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
@@ -41,6 +45,7 @@ export default function Login() {
                     password: formData.password
                 }
             );
+            dispatch(setAuthenticated(true))
             navigate('/dashboard')
 
         } catch (error) {

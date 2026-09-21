@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { MainMenu } from "~/utils/const"
 import { useSelector, useDispatch } from 'react-redux'
-import CartContext from "~/context/CartContext"
 
 export default function Header({ handleUpdate }) {
 

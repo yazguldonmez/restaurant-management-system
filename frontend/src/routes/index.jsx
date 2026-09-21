@@ -8,6 +8,7 @@ import Cart from "~/pages/Cart/Cart"
 import Reservation from "~/pages/Reservation"
 import Login from "~/pages/Login/Login"
 import Dashboard from "~/admin/pages/Dashboard"
+import ProtectedRoute from "~/admin/components/ProtectedRoute"
 
 const routes = createBrowserRouter([
     {
@@ -45,22 +46,26 @@ const routes = createBrowserRouter([
         ]
     },
     {
-        path: 'dashboard',
-        element: <AdminLayout />,
+        element: <ProtectedRoute />,
         children: [
             {
-                index: true,
-                element: <Dashboard />
-            },
-            // {
-            //     path: 'products',
-            //     element: <Products />
-            // },
-            // {
-            //     path: 'products/add',
-            //     element: <ProductAdd />
-            // }
-        ]
+                path: 'dashboard',
+                element: <AdminLayout />,
+                children: [
+                    {
+                        index: true,
+                        element: <Dashboard />
+                    },
+                    // {
+                    //     path: 'products',
+                    //     element: <Products />
+                    // },
+                    // {
+                    //     path: 'products/add',
+                    //     element: <ProductAdd />
+                    // }
+                ]
+            }]
     }
 ])
 
