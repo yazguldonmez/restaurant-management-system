@@ -53,9 +53,8 @@ export default function Menu() {
 
     const productDetail = async () => {
         const response = await api.get(`/api/menu/${params.category}/${params.product}`);
-
+        console.log(response.data)
         setProduct(response.data.data)
-        // console.log(response.data.data)
         setDoughType(response.data.doughTypes)
         setVariants(response.data.data.product_variants)
 
@@ -74,11 +73,12 @@ export default function Menu() {
     }
 
     const changedSelectDough = (e) => {
-        const dough = doughType.find(doughId => doughId.id === parseInt(e.target.value))
+        const dough = doughType?.find(doughId => doughId.id === parseInt(e.target.value))
+        console.log(dough)
         setSelectedDoughId(e.target.value)
 
         const selectedVariant = variants.find(v => v.id === selectedSizeId)
-        if (dough.price !== null) {
+        if (dough?.price !== null) {
             setPrice(selectedVariant.price + dough.price)
             setDefaultVariant(selectedVariant)
         } else {

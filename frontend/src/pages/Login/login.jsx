@@ -35,9 +35,9 @@ export default function Login() {
 
     const postData = async () => {
 
-        await api.get('/sanctum/csrf-cookie');
-
         try {
+            await api.get('/sanctum/csrf-cookie');
+
             await api.post(
                 `/api/login`,
                 {
@@ -109,4 +109,5 @@ export default function Login() {
             </section>
         </>
     )
+
 }

@@ -9,6 +9,8 @@ import Reservation from "~/pages/Reservation"
 import Login from "~/pages/Login/Login"
 import Dashboard from "~/admin/pages/Dashboard"
 import ProtectedRoute from "~/admin/components/ProtectedRoute"
+import Index from "~/admin/pages/user"
+import Forbidden from "~/pages/errors/Forbidden"
 
 const routes = createBrowserRouter([
     {
@@ -55,6 +57,14 @@ const routes = createBrowserRouter([
                     {
                         index: true,
                         element: <Dashboard />
+                    },
+                    {
+                        path: '403',
+                        element: <Forbidden />
+                    },
+                    {
+                        path: 'user',
+                        element: <Index />
                     },
                     // {
                     //     path: 'products',

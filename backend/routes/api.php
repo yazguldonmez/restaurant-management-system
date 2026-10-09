@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\CategoryController;
@@ -43,4 +44,5 @@ Route::prefix('dashboard')
     ->name('dashboard')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
+        Route::get('/user', [UserController::class, 'index']);
     });

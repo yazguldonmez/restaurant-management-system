@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import api from '~/axios'
 
 export default function Dashboard() {
 
     const [user, setUser] = useState({})
+
+    const authenticated = useSelector((state) => state.auth.authenticated)
 
     const navigate = useNavigate()
 
@@ -22,6 +25,8 @@ export default function Dashboard() {
     useEffect(() => {
         fetchData()
     }, []);
+    
+    console.log(authenticated)
 
     return (
         <>

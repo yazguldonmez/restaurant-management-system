@@ -35,6 +35,10 @@ class DatabaseSeeder extends Seeder
             ProductToppingSeeder::class,
             ProductDoughTypeSeeder::class,
             UserSeeder::class,
+            RolesSeeder::class,
+            PermissionSeeder::class,
+            PermissionRoleSeeder::class,
+            RoleUserSeeder::class,
         ]);
     }
 }
