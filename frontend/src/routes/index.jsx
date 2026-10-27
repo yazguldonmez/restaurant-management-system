@@ -41,11 +41,11 @@ const routes = createBrowserRouter([
                 path: 'book-table',
                 element: <Reservation />
             },
-            {
-                path: 'login',
-                element: <Login />
-            },
         ]
+    },
+    {
+        path: 'login',
+        element: <Login />
     },
     {
         element: <ProtectedRoute />,

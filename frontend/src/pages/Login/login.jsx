@@ -7,8 +7,6 @@ import { setAuthenticated } from "~/store/auth/authSlice";
 
 export default function Login() {
 
-    // const [about, setAbout] = useState({})
-
     const [formData, setFormData] = useState({ email: '', password: '' })
     const [errors, setErrors] = useState({})
 
@@ -59,7 +57,6 @@ export default function Login() {
             }
         }
     }
-
 
     return (
         <>

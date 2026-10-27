@@ -22,6 +22,9 @@ instance.interceptors.response.use(
                 console.log("User is not logged in.");
                 store.dispatch(setAuthenticated(false))
             }
+            if (error.response?.status === 403) {
+                window.location.href = '403'; 
+            }
         }
 
         return Promise.reject(error);
